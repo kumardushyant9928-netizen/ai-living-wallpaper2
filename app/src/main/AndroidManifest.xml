@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:versionCode="1"
+    android:versionName="1.0.0">
 
-    <!-- Required Permissions -->
+    <!-- Minimum API 31 (Android 12) -->
+    <uses-sdk
+        android:minSdkVersion="31"
+        android:targetSdkVersion="34" />
+
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    
-    <!-- Sensor Permissions -->
+    <uses-permission android:name="android.permission.SENSOR" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.BODY_SENSORS" />
-    
-    <!-- Features -->
-    <uses-feature android:name="android.software.live_wallpaper" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Sensor features -->
     <uses-feature
         android:name="android.hardware.sensor.accelerometer"
         android:required="false" />
@@ -23,19 +24,30 @@
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_schemes"
+        android:debuggable="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AiLivingWallpaper"
-        android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        android:usesCleartextTraffic="true">
 
-        <!-- Main Live Wallpaper Service -->
+        <!-- Settings Activity -->
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AiLivingWallpaper">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Live Wallpaper Service -->
         <service
             android:name=".wallpaper.LiveWallpaperService"
             android:exported="true"
+            android:label="@string/app_name"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
@@ -44,16 +56,6 @@
                 android:name="android.service.wallpaper"
                 android:resource="@xml/wallpaper_metadata" />
         </service>
-
-        <!-- Settings Activity -->
-        <activity
-            android:name=".ui.SettingsActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
     </application>
 

@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    kotlin("android")
 }
 
 android {
@@ -9,19 +9,18 @@ android {
 
     defaultConfig {
         applicationId = "com.ailivingworld.wallpaper"
-        minSdk = 29
+        minSdk = 31
         targetSdk = 34
         versionCode = 1
-        versionName = "0.1.0"
+        versionName = "1.0.0"
 
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -29,6 +28,7 @@ android {
         }
         debug {
             isMinifyEnabled = false
+            isDebuggable = true
         }
     }
 
@@ -42,41 +42,32 @@ android {
     }
 
     buildFeatures {
-        aidl = true
-    }
-
-    packaging {
-        resources {
-            excludes += listOf(
-                "META-INF/proguard/androidx-*.pro",
-                "META-INF/*.kotlin_module"
-            )
-        }
+        buildConfig = true
     }
 }
 
 dependencies {
-    // Android Core
-    implementation("androidx.core:core:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    
-    // OpenGL ES (built-in, no extra dependency needed)
-    
-    // HTTP for OpenAI API
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-    
-    // JSON parsing
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
+
+    // Android Core
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.google.android.material:material:1.9.0")
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+
+    // Networking
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.google.code.gson:gson:2.10.1")
-    
+
     // Logging
     implementation("com.jakewharton.timber:timber:5.0.1")
-    
-    // Testing (minimal)
+
+    // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
