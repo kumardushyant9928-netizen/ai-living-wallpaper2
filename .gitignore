@@ -1,0 +1,36 @@
+# Gradle
+.gradle
+/build/
+*.gradle
+*.gradle.kts
+.gradle/
+
+# Android Studio
+.idea/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+
+# Build outputs
+/app/build/
+*.apk
+*.aar
+*.ap_
+*.dex
+*.class
+
+# Local configuration
+local.properties
+
+# Signing files
+*.keystore
+*.jks
+
+# IDE
+*.swp
+*.swo
+*~
+.vscode/
+*.suo
+*.user
