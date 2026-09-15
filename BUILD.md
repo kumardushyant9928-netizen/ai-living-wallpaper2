@@ -1,0 +1,95 @@
+# Build Configuration
+
+## Gradle Build Setup
+
+```gradle
+plugins {
+    id 'com.android.application' version '8.0.0'
+    id 'kotlin-android'
+}
+
+android {
+    namespace 'com.ailivingworld.wallpaper'
+    compileSdk 34
+    
+    defaultConfig {
+        applicationId 'com.ailivingworld.wallpaper'
+        minSdk 31
+        targetSdk 34
+        versionCode 1
+        versionName '1.0.0'
+    }
+    
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+}
+
+dependencies {
+    // Kotlin
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.0'
+    
+    // Android Core
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.material:material:1.9.0'
+    
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    
+    // Networking
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    
+    // Logging
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+    
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+```
+
+## ProGuard Configuration
+
+```proguard
+# Keep Kotlin classes
+-keep class kotlin.** { *; }
+-keep class kotlinx.** { *; }
+
+# Keep GSON
+-keep class com.google.gson.** { *; }
+-keep class com.ailivingworld.wallpaper.** { *; }
+
+# Keep OkHttp
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+
+# Keep our classes
+-keep class com.ailivingworld.wallpaper.** { *; }
+-keepclassmembers class com.ailivingworld.wallpaper.** { *; }
+
+# Keep coroutines
+-keepclassmembernames class kotlinx.coroutines.internal.MainDispatcherFactory {
+    *;
+}
+```
